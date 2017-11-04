@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.BaseDao;
@@ -21,27 +20,24 @@ import com.lepus.hikari.framework.build.BaseDao;
 @Controller
 public class AnimeController extends BaseController{
 	
+	public static void main(String[] args){
+		System.out.println(1);
+	}
+	
 	@Resource
-	private BaseDao baseDao;
+	protected BaseDao baseDao; 
 	
 	@RequestMapping("/anime/list.go")
 	public Object go(ModelMap modelMap){
-		List<?> list = baseDao.getHibernateTemplate().find("from Anime");
-		System.out.println(list.size());
-		System.out.println(gson.toJson(list));
-		for(Object o : list){
-			if(o instanceof Object[]){
-				System.out.println(((Object[])o)[0]);
-			}
-		}
-		return new ModelAndView("/anime/list.jsp");
+		baseDao.getHibernateTemplate().find("from Anime");
+		return "anime-list.jsp";
 	}
 	
 	@RequestMapping("/anime/test.ajax")
 	@ResponseBody
 	public Object go(String name){
-		
-		return "其实没成功";
+		String str = "其实没成功";
+		return getSuccessJson(str, null);
 	}
 	
 }
