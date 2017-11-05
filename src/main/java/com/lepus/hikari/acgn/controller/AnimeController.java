@@ -1,16 +1,16 @@
 package com.lepus.hikari.acgn.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lepus.hikari.acgn.bean.Anime;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.BaseDao;
+import com.lepus.hikari.framework.build.Hql;
+import com.lepus.hikari.framework.build.Page;
 
 /**
  * 
@@ -20,24 +20,13 @@ import com.lepus.hikari.framework.build.BaseDao;
 @Controller
 public class AnimeController extends BaseController{
 	
-	public static void main(String[] args){
-		System.out.println(1);
-	}
-	
 	@Resource
 	protected BaseDao baseDao; 
 	
 	@RequestMapping("/anime/list.go")
 	public Object go(ModelMap modelMap){
-		baseDao.getHibernateTemplate().find("from Anime");
+		baseDao.findPage(Anime.class, Hql.build("x", null), new Page<Anime>());
 		return "anime-list.jsp";
-	}
-	
-	@RequestMapping("/anime/test.ajax")
-	@ResponseBody
-	public Object go(String name){
-		String str = "其实没成功";
-		return getSuccessJson(str, null);
 	}
 	
 }

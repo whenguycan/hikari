@@ -9,7 +9,7 @@ import com.lepus.hikari.framework.utils.EnumsUtils.MyEnum;
  */
 public enum WatchState implements MyEnum{
 	
-	O("0", "其他"),
+	OTHER("0", "其他"),
 	ING("1", "观看中"),
 	END("2", "已补完");
 	

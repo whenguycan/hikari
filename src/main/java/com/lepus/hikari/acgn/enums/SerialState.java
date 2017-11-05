@@ -9,7 +9,7 @@ import com.lepus.hikari.framework.utils.EnumsUtils.MyEnum;
  */
 public enum SerialState implements MyEnum{
 	
-	O("0", "其他"),
+	OTHER("0", "其他"),
 	ING("1", "连载中"),
 	END("2", "已完结");
 	
