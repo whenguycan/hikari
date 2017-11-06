@@ -8,14 +8,17 @@ import java.util.List;
  * @date 2017-11-3
  */
 public class Page<T> {
-
-	private int pageNo;
 	
-	private int pre;
-	
-	private int after;
+	public static final int DEFAULT_PAGE_SIZE = 10;
+	public static final int DEFAULT_FIRST_PAGE_NO = 1;
 
-	private int pageSize;
+	private int pageNo = DEFAULT_FIRST_PAGE_NO;
+
+	private int pageSize = DEFAULT_PAGE_SIZE;
+	
+	private int pre = DEFAULT_FIRST_PAGE_NO;
+	
+	private int after = DEFAULT_FIRST_PAGE_NO + 1;
 
 	private int rows;
 
@@ -28,7 +31,7 @@ public class Page<T> {
 	}
 
 	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+		this.pageNo = pageNo<1?DEFAULT_FIRST_PAGE_NO:pageNo;
 	}
 
 	public int getPageSize() {

@@ -15,7 +15,7 @@
 </script>
 </head>
 <body>
-	${dcwe:convert('State', '1')}
+	${dcwe:convert('SerialState', '1')}
 	<input type="button" value="TEST" onclick="go()" />
 </body>
 </html>

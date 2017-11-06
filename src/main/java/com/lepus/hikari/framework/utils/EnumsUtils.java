@@ -15,7 +15,6 @@ import java.util.Set;
  * @author wangchenyu@cit
  * @date   2017-9-19
  */
-@SuppressWarnings("all")
 public class EnumsUtils {
 
 	private static Map<String, Enum[]> enums = new HashMap<String, Enum[]>();

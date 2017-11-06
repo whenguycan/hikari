@@ -25,7 +25,8 @@ public class AnimeController extends BaseController{
 	
 	@RequestMapping("/anime/list.go")
 	public Object go(ModelMap modelMap){
-		baseDao.findPage(Anime.class, Hql.build("x", null), new Page<Anime>());
+		Page<Anime> page = baseDao.findPage(Hql.build(Anime.class, "name likd 'a%'", null), new Page<Anime>());
+		System.out.println(page.getList().size());
 		return "anime-list.jsp";
 	}
 	

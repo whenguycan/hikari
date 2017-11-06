@@ -1,11 +1,13 @@
 package com.lepus.hikari.acgn.bean;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.lepus.hikari.acgn.enums.SerialState;
@@ -16,8 +18,8 @@ import com.lepus.hikari.acgn.enums.WatchState;
  * @author wangchenyu
  * @date 2017-11-3
  */
-@Entity(dynamicUpdate = true)
-@javax.persistence.Entity
+@org.hibernate.annotations.Entity(dynamicUpdate = true)
+@Entity
 @Table(name = "t_e_anime")
 public class Anime {
 
@@ -29,6 +31,10 @@ public class Anime {
 	
 	@Column(columnDefinition = "varchar(64)")
 	private String name;
+	
+	@ManyToOne
+	@JoinColumn(name = "groupId")
+	private Group group;
 	
 	@Column(columnDefinition = "int(11) not null")
 	private int serialState = SerialState.ING.codeInt();
@@ -118,6 +124,14 @@ public class Anime {
 
 	public void setSummary(String summary) {
 		this.summary = summary;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 	
 }
