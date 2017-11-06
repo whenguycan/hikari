@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.lepus.hikari.acgn.enums.SerialState;
 import com.lepus.hikari.acgn.enums.WatchState;
+import com.lepus.hikari.framework.build.BaseEntity;
 
 /**
  * 
@@ -21,7 +22,8 @@ import com.lepus.hikari.acgn.enums.WatchState;
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Entity
 @Table(name = "t_e_anime")
-public class Anime {
+public class Anime extends BaseEntity{
+	private static final long serialVersionUID = 4104312292631474689L;
 
 	@Id
 	@Column(columnDefinition = "varchar(32)")

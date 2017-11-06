@@ -23,17 +23,37 @@ public class BaseDao extends HibernateDaoSupport{
 		super.setSessionFactory(sessionFactory);
 	}
 	
-	public void test(){
-		int a = getSession().createQuery("from Anime a left join a.group agroup left join agroup.text agrouptext").list().size();
-		int b = getSession().createQuery("from Anime a left join a.group agroup left join a.group.text agrouptext").list().size();
-		System.out.println(a + "/" + b);
+	public <T> T save(T t){
+		getHibernateTemplate().save(t);
+		return t;
+	}
+	
+	public <T> T update(T t){
+		getHibernateTemplate().update(t);
+		return t;
+	}
+	
+	public <T> void delete(T t){
+		getHibernateTemplate().delete(t);
+	}
+	
+	public <T> void delete(Class<T> clazz, String id){
+		T t = getHibernateTemplate().get(clazz, id);
+		getHibernateTemplate().delete(t);
+	}
+	
+	public <T> List<T> findList(Hql hql){
+		Session session = getSession();
+		List<T> list = session.createQuery(hql.getQueryHql()).list();
+		session.close();
+		return list;
 	}
 	
 	public <T> Page<T> findPage(Hql hql, Page<T> page){
 		Session session = getSession();
 		int count = ((Number)session.createQuery(hql.getCountHql()).uniqueResult()).intValue();
 		int first = (page.getPageNo() - 1) * page.getPages();
-		List<T> list = (List<T>)session.createQuery(hql.getHql()).setFirstResult(first).setMaxResults(page.getPageSize()).list();
+		List<T> list = session.createQuery(hql.getQueryHql()).setFirstResult(first).setMaxResults(page.getPageSize()).list();
 		page.setList(list);
 		page.setRows(count);
 		page.setPages(count%page.getPageSize()==0?count/page.getPageSize():count/page.getPageSize()+1);
