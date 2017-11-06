@@ -56,6 +56,12 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "varchar(255)")
 	private String summary;
 	
+	@Column(columnDefinition = "int(16) not null", updatable = false)
+	private long createTime = System.currentTimeMillis();
+
+	@Column(columnDefinition = "int(16) not null", updatable = true)
+	private long updateTime = System.currentTimeMillis();
+	
 	public int getWatchState(){
 		int s = 0;
 		if(this.total != 0){
