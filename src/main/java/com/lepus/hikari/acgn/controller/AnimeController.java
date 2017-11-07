@@ -1,6 +1,9 @@
 package com.lepus.hikari.acgn.controller;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +14,7 @@ import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Hql;
 import com.lepus.hikari.framework.build.Page;
+import com.lepus.hikari.framework.utils.StringUtils;
 
 /**
  * 
@@ -24,14 +28,31 @@ public class AnimeController extends BaseController{
 	protected AnimeService animeService;
 	
 	@RequestMapping("/anime/list.go")
-	public Object go(ModelMap modelMap){
-		Page<Anime> page = new Page<Anime>();
-		animeService.findPage(page, Hql.init("from Anime a"));
+	public Object go(ModelMap modelMap, HttpServletRequest req){
+		String size = req.getParameter("size");
+		init(size);
+		System.out.println(1);
+		Map<String, String> params = getInterceptoredParams(req);
+		Page<Anime> page = animeService.findPage(new Page<Anime>(), Hql.init(Anime.class, params));
+		System.out.println(page.getList().size());
+		modelMap.addAttribute("page", page);
 		return "anime-list.jsp";
 	}
-	
-	public static void main(String[] args){
-		System.out.println(1);
+	private void init(String size){
+		if(StringUtils.isNotBlank(size)){
+			try {
+				int x = Integer.parseInt(size);
+				for(int i=0; i<x; i++){
+					Anime anime = new Anime();
+					anime.setName("Anime" + Math.random());
+					anime.setYear("2016");
+					anime.setMonth("" + i);
+					animeService.save(anime);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }

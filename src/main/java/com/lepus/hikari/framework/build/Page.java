@@ -25,6 +25,19 @@ public class Page<T> {
 	private int pages;
 
 	private List<T> list;
+	
+	public Page(){
+		
+	}
+	
+	public Page(int pageNo){
+		setPageNo(pageNo);
+	}
+	
+	public Page(int pageNo, int pageSize){
+		setPageNo(pageNo);
+		setPageSize(pageSize);
+	}
 
 	public int getPageNo() {
 		return pageNo;
@@ -39,7 +52,7 @@ public class Page<T> {
 	}
 
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+		this.pageSize = pageSize<1?DEFAULT_PAGE_SIZE:pageSize;
 	}
 
 	public int getPre() {

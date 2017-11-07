@@ -26,7 +26,6 @@ public class BaseService<T extends BaseEntity> {
 	public BaseService(){
 		Type type = getClass().getGenericSuperclass();
 		if(type instanceof ParameterizedType){
-			System.out.println(1);
 			Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
 			this.clazz = (Class<T>)actualTypeArguments[0];
 		}else{

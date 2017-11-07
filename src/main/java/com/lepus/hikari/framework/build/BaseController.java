@@ -1,9 +1,13 @@
 package com.lepus.hikari.framework.build;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.google.gson.Gson;
+import com.lepus.hikari.framework.utils.StringUtils;
 
 /**
  * 
@@ -13,6 +17,22 @@ import com.google.gson.Gson;
 public class BaseController {
 	
 	protected Gson gson = new Gson();
+	
+	protected Map<String, String> getInterceptoredParams(HttpServletRequest req){
+		Map<String, String> params = new HashMap<String, String>();
+		Enumeration<String> e = req.getParameterNames();
+		while(e.hasMoreElements()){
+			String pattern = e.nextElement();
+			String[] arr = pattern.split("_");
+			if("s".equalsIgnoreCase(arr[0]) || "sa".equalsIgnoreCase(arr[0])){
+				String[] valueArr = req.getParameterValues(pattern);
+				if(valueArr != null && valueArr.length != 0 && StringUtils.isNotBlank(valueArr[0])){
+					params.put(pattern, valueArr[0]);
+				}
+			}
+		}
+		return params;
+	}
 	
 	protected String getSuccessJson(String msg, Object data){
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -1,11 +1,11 @@
 package com.lepus.hikari.acgn.bean;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -34,10 +34,6 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "varchar(64)")
 	private String name;
 	
-	@ManyToOne
-	@JoinColumn(name = "groupId")
-	private Group group;
-	
 	@Column(columnDefinition = "int(11) not null")
 	private int serialState = SerialState.ING.codeInt();
 	
@@ -56,11 +52,11 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "varchar(255)")
 	private String summary;
 	
-	@Column(columnDefinition = "int(16) not null", updatable = false)
-	private long createTime = System.currentTimeMillis();
+	@Column(columnDefinition = "datetime not null", updatable = false)
+	private Date createTime = new Date();
 
-	@Column(columnDefinition = "int(16) not null", updatable = true)
-	private long updateTime = System.currentTimeMillis();
+	@Column(columnDefinition = "datetime not null", updatable = true)
+	private Date updateTime = new Date();
 	
 	public int getWatchState(){
 		int s = 0;
@@ -134,12 +130,20 @@ public class Anime extends BaseEntity{
 		this.summary = summary;
 	}
 
-	public Group getGroup() {
-		return group;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }
