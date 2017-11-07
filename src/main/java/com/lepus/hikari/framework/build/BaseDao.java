@@ -56,13 +56,13 @@ public class BaseDao extends HibernateDaoSupport{
 	public <T> Page<T> findPage(Hql hql, Page<T> page){
 		Session session = getSession();
 		int count = ((Number)session.createQuery(hql.getCountHql()).uniqueResult()).intValue();
-		int first = (page.getPageNo() - 1) * page.getPages();
+		int first = (page.getPageNo() - 1) * page.getPageSize();
 		List<T> list = session.createQuery(hql.getQueryHql()).setFirstResult(first).setMaxResults(page.getPageSize()).list();
 		page.setList(list);
-		page.setRows(count);
-		page.setPages(count%page.getPageSize()==0?count/page.getPageSize():count/page.getPageSize()+1);
+		page.setRowCount(count);
+		page.setPageCount(count%page.getPageSize()==0?count/page.getPageSize():count/page.getPageSize()+1);
 		page.setPre(page.getPageNo()==1?1:page.getPageNo()-1);
-		page.setAfter(page.getPageNo()<page.getPages()?page.getPageNo()+1:page.getPages());
+		page.setAfter(page.getPageNo()<page.getPageCount()?page.getPageNo()+1:page.getPageCount());
 		session.close();
 		return page;
 	}

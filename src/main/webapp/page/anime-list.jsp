@@ -18,6 +18,7 @@
 		<div>
 			<form id="searchForm" action="list.go" method="post">
 				<input type="text" name="sa_like_s_name" value="${sa_like_s_name }" />
+				<input type="text" name="pageNo" value="${page.pageNo }" />
 				<input type="submit" value="Submit">
 			</form>
 		</div>

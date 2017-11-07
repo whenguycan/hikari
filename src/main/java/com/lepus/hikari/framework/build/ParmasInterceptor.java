@@ -1,6 +1,8 @@
 package com.lepus.hikari.framework.build;
 
 import java.util.Enumeration;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +22,13 @@ public class ParmasInterceptor implements HandlerInterceptor{
 		return true;
 	}
 	private void resolveParams(HttpServletRequest request){
-		Enumeration<String> e = request.getParameterNames();
-		while(e.hasMoreElements()){
-			String pattern = e.nextElement();
+		Map<String, String[]> params = request.getParameterMap();
+		for(Entry<String, String[]> entry : params.entrySet()){
+			String pattern = entry.getKey();
 			String[] arr = pattern.split("_");
 			if(arr != null && arr.length != 0){
 				if("sa".equalsIgnoreCase(arr[0])){
-					String[] valueArr = request.getParameterValues(pattern);
+					String[] valueArr = entry.getValue();
 					if(valueArr != null && valueArr.length != 0)
 						request.setAttribute(pattern, valueArr[0]);
 				}

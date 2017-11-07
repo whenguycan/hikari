@@ -3,6 +3,7 @@ package com.lepus.hikari.framework.build;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,19 +20,19 @@ public class BaseController {
 	protected Gson gson = new Gson();
 	
 	protected Map<String, String> getInterceptoredParams(HttpServletRequest req){
-		Map<String, String> params = new HashMap<String, String>();
-		Enumeration<String> e = req.getParameterNames();
-		while(e.hasMoreElements()){
-			String pattern = e.nextElement();
+		Map<String, String> paramMap = new HashMap<String, String>();
+		Map<String, String[]> params = req.getParameterMap();
+		for(Entry<String, String[]> entry : params.entrySet()){
+			String pattern = entry.getKey();
 			String[] arr = pattern.split("_");
 			if("s".equalsIgnoreCase(arr[0]) || "sa".equalsIgnoreCase(arr[0])){
-				String[] valueArr = req.getParameterValues(pattern);
+				String[] valueArr = entry.getValue();
 				if(valueArr != null && valueArr.length != 0 && StringUtils.isNotBlank(valueArr[0])){
-					params.put(pattern, valueArr[0]);
+					paramMap.put(pattern, valueArr[0]);
 				}
 			}
 		}
-		return params;
+		return paramMap;
 	}
 	
 	protected String getSuccessJson(String msg, Object data){

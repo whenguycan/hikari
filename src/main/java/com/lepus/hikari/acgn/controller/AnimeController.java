@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.lepus.hikari.acgn.bean.Anime;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
-import com.lepus.hikari.framework.build.Hql;
 import com.lepus.hikari.framework.build.Page;
 import com.lepus.hikari.framework.utils.StringUtils;
 
@@ -28,11 +27,11 @@ public class AnimeController extends BaseController{
 	protected AnimeService animeService;
 	
 	@RequestMapping("/anime/list.go")
-	public Object go(ModelMap modelMap, HttpServletRequest req){
+	public Object go(ModelMap modelMap, HttpServletRequest req, Page<Anime> page){
 		String size = req.getParameter("size");
 		init(size);
 		Map<String, String> params = getInterceptoredParams(req);
-		Page<Anime> page = animeService.findPage(params, new Page<Anime>());
+		page = animeService.findPage(params, page);
 		modelMap.addAttribute("page", page);
 		return "anime-list.jsp";
 	}
@@ -43,8 +42,8 @@ public class AnimeController extends BaseController{
 				for(int i=0; i<x; i++){
 					Anime anime = new Anime();
 					anime.setName("Anime" + Math.random());
-					anime.setYear("2016");
-					anime.setMonth("" + i);
+					anime.setYear(2016);
+					anime.setMonth(i);
 					animeService.save(anime);
 				}
 			} catch (Exception e) {

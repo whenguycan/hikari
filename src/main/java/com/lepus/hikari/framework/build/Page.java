@@ -20,9 +20,9 @@ public class Page<T> {
 	
 	private int after = DEFAULT_FIRST_PAGE_NO + 1;
 
-	private int rows;
+	private int rowCount;
 
-	private int pages;
+	private int pageCount;
 
 	private List<T> list;
 	
@@ -71,20 +71,20 @@ public class Page<T> {
 		this.after = after;
 	}
 
-	public int getRows() {
-		return rows;
+	public int getRowCount() {
+		return rowCount;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
 	}
 
-	public int getPages() {
-		return pages;
+	public int getPageCount() {
+		return pageCount;
 	}
 
-	public void setPages(int pages) {
-		this.pages = pages;
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
 	}
 
 	public List<T> getList() {

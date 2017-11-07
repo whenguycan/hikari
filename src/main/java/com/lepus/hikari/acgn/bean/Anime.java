@@ -43,11 +43,11 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "int(11) not null")
 	private int total;
 	
-	@Column(columnDefinition = "varchar(32)")
-	private String year;
+	@Column(columnDefinition = "int(8) not null")
+	private int year;
 	
-	@Column(columnDefinition = "varchar(32)")
-	private String month;
+	@Column(columnDefinition = "int(8) not null")
+	private int month;
 	
 	@Column(columnDefinition = "varchar(255)")
 	private String summary;
@@ -106,19 +106,19 @@ public class Anime extends BaseEntity{
 		this.total = total;
 	}
 
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 
-	public String getMonth() {
+	public int getMonth() {
 		return month;
 	}
 
-	public void setMonth(String month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
 
