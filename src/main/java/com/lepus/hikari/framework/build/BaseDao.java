@@ -2,11 +2,15 @@ package com.lepus.hikari.framework.build;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+
+import com.lepus.hikari.acgn.bean.Anime;
 
 /**
  * 

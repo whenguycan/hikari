@@ -31,10 +31,8 @@ public class AnimeController extends BaseController{
 	public Object go(ModelMap modelMap, HttpServletRequest req){
 		String size = req.getParameter("size");
 		init(size);
-		System.out.println(1);
 		Map<String, String> params = getInterceptoredParams(req);
-		Page<Anime> page = animeService.findPage(new Page<Anime>(), Hql.init(Anime.class, params));
-		System.out.println(page.getList().size());
+		Page<Anime> page = animeService.findPage(params, new Page<Anime>());
 		modelMap.addAttribute("page", page);
 		return "anime-list.jsp";
 	}

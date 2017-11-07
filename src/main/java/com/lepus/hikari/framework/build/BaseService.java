@@ -49,16 +49,12 @@ public class BaseService<T extends BaseEntity> {
 		dao.delete(clazz, id);
 	}
 	
-	public Page<T> findPage(Page<T> page, Map<String, String> params){
-		return findPage(page, Hql.init(clazz, params));
+	public List<T> findList(Map<String, String> params){
+		return dao.findList(Hql.build(clazz, params));
 	}
 	
-	public Page<T> findPage(Page<T> page, Hql hql){
-		return dao.findPage(hql, page);
-	}
-	
-	public List<T> findList(Hql hql){
-		return dao.findList(hql);
+	public Page<T> findPage(Map<String, String> params, Page<T> page){
+		return dao.findPage(Hql.build(clazz, params), page);
 	}
 	
 }

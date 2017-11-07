@@ -21,14 +21,13 @@
 				<input type="submit" value="Submit">
 			</form>
 		</div>
-		${page }
 		<div>
 			<table>
 				<thead>
 					<tr>
 						<th>Index</th>
 						<th>Name</th>
-						<th>Month/Year</th>
+						<th>Year/Month</th>
 						<th>Curr/Total</th>
 						<th>SerialState</th>
 					</tr>
@@ -38,9 +37,9 @@
 						<tr>
 							<td>${idx.count }</td>
 							<td>${e.name }</td>
-							<td>${e.month }/${e.year }</td>
+							<td>${e.year }/${e.month }</td>
 							<td>${e.curr }/${e.total }</td>
-							<td>${e.serialState }</td>
+							<td>${dcwe:convert('SerialState', e.serialState) }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
