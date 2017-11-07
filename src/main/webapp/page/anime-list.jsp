@@ -18,6 +18,12 @@
 		<div>
 			<form id="searchForm" action="list.go" method="post">
 				<input type="text" name="sa_like_s_name" value="${sa_like_s_name }" />
+				<select name="sa_eq_i_serialState">
+					<option value="">全部</option>
+					<c:forEach items="${SerialState }" var="e">
+						<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
+					</c:forEach>
+				</select>
 				<input type="text" name="pageNo" value="${page.pageNo }" />
 				<input type="submit" value="Submit">
 			</form>

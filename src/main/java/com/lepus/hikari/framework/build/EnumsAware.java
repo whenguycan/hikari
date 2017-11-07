@@ -18,6 +18,9 @@ public class EnumsAware implements ServletContextAware{
 
 	public void setServletContext(ServletContext context) {
 		EnumsUtils.load("com.lepus.hikari.acgn.enums");
+		for(String tag : EnumsUtils.allMap().keySet()){
+			context.setAttribute(tag, EnumsUtils.generateSelect(tag, new String[]{"0"}));
+		}
 		EnumsConverter.init(EnumsUtils.allMap());
 	}
 
