@@ -1,5 +1,8 @@
 package com.lepus.hikari.acgn.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -8,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lepus.hikari.acgn.bean.Anime;
 import com.lepus.hikari.acgn.service.AnimeService;
@@ -60,8 +66,18 @@ public class AnimeController extends BaseController{
 	}
 	
 	@RequestMapping("/anime/import.do")
-	public Object importDo(){
-		return getSuccessJson("msg", null);
+	@ResponseBody
+	public Object importDo(@RequestParam("importFile")MultipartFile file){
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
+			String line = null;
+			while((line = br.readLine()) != null){
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getSuccessJson("0", null);
 	}
 	
 }

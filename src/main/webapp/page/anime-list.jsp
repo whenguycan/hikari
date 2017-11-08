@@ -26,7 +26,10 @@
 				type : 2,
 				skin : 'layui-layer-rim',
 				area : ['720px', '300px'],
-				content : 'import.go'
+				content : 'import.go',
+				end : function(){
+					location.href = $("#searchForm").attr("action");
+				}
 			});
 		});
 	});
