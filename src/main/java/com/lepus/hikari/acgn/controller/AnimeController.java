@@ -31,6 +31,7 @@ public class AnimeController extends BaseController{
 		String size = req.getParameter("size");
 		init(size);
 		Map<String, String> params = getInterceptoredParams(req);
+		params.put("s_order_desc_createTime", "order");
 		page = animeService.findPage(params, page);
 		modelMap.addAttribute("page", page);
 		return "anime-list.jsp";
