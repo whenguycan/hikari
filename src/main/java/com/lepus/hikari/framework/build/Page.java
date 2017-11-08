@@ -1,5 +1,6 @@
 package com.lepus.hikari.framework.build;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ public class Page<T> {
 	
 	public static final int DEFAULT_PAGE_SIZE = 10;
 	public static final int DEFAULT_FIRST_PAGE_NO = 1;
+	public static final int DISPLAY_PAGINATION_LEN = 5;
 
 	private int pageNo = DEFAULT_FIRST_PAGE_NO;
 
@@ -19,10 +21,14 @@ public class Page<T> {
 	private int pre = DEFAULT_FIRST_PAGE_NO;
 	
 	private int after = DEFAULT_FIRST_PAGE_NO + 1;
+	
+	private int rowFound;
 
 	private int rowCount;
 
 	private int pageCount;
+	
+	private List<Integer> pagination = new ArrayList<Integer>();
 
 	private List<T> list;
 	
@@ -93,6 +99,48 @@ public class Page<T> {
 
 	public void setList(List<T> list) {
 		this.list = list;
+	}
+	
+	public int getRowFound() {
+		this.rowFound = this.list!=null?this.list.size():0;
+		return rowFound;
+	}
+
+	public List<Integer> getPagination() {
+		calPagination();
+		return pagination;
+	}
+
+	public void calPagination(){
+		int curr = this.pageNo;
+		int total = this.pageCount;
+		int len = DISPLAY_PAGINATION_LEN;
+		if(total > len){
+			int begin = 0;
+			int end = 0;
+			if(len % 2 == 0){
+				begin = curr - 2;
+				end = curr + 3;
+			}else{
+				begin = curr - 2;
+				end = curr + 2;
+			}
+			if(begin < 1){
+				end += 1 - begin;
+				begin = 1;
+			}
+			if(end > total){
+				begin += total - end;
+				end = total;
+			}
+			for(int i=begin ,iLen=end+1; i<iLen; i++){
+				this.pagination.add(i);
+			}
+		}else{
+			for(int i=1, iLen=total+1; i<iLen; i++){
+				this.pagination.add(i);
+			}
+		}
 	}
 
 }

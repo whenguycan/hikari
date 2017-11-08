@@ -1,6 +1,7 @@
 package com.lepus.hikari.acgn.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	
 	@RequestMapping("/home.go")
-	public Object home(){
-		return "";
+	public Object home(ModelMap modelMap){
+		return "home.jsp";
 	}
 
 }

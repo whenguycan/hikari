@@ -45,12 +45,23 @@ public class AnimeController extends BaseController{
 					anime.setName("Anime" + Math.random());
 					anime.setYear(2016);
 					anime.setMonth(i);
+					anime.setSerialState(i%2 + 1);
 					animeService.save(anime);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@RequestMapping("/anime/import.go")
+	public Object importGo(){
+		return "anime-list-import.jsp";
+	}
+	
+	@RequestMapping("/anime/import.do")
+	public Object importDo(){
+		return getSuccessJson("msg", null);
 	}
 	
 }

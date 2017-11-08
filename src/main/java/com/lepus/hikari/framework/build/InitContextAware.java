@@ -27,6 +27,7 @@ public class InitContextAware implements ServletContextAware, ApplicationContext
 	@Override
 	public void setServletContext(ServletContext context) {
 		initEnums(context);
+		initContextPath(context);
 	}
 	private void initEnums(ServletContext context){
 		EnumsUtils.load("com.lepus.hikari.acgn.enums");
@@ -34,6 +35,9 @@ public class InitContextAware implements ServletContextAware, ApplicationContext
 			context.setAttribute(tag, EnumsUtils.generateSelect(tag, new String[]{"0"}));
 		}
 		EnumsConverter.init(EnumsUtils.allMap());
+	}
+	private void initContextPath(ServletContext context){
+		context.setAttribute("root", context.getContextPath());
 	}
 
 }

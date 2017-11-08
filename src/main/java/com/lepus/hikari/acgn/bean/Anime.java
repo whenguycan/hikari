@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.lepus.hikari.acgn.enums.SerialState;
-import com.lepus.hikari.acgn.enums.WatchState;
 import com.lepus.hikari.framework.build.BaseEntity;
 
 /**
@@ -57,14 +56,6 @@ public class Anime extends BaseEntity{
 
 	@Column(columnDefinition = "datetime not null", updatable = true)
 	private Date updateTime = new Date();
-	
-	public int getWatchState(){
-		int s = 0;
-		if(this.total != 0){
-			s = this.total==this.curr?WatchState.END.codeInt():WatchState.ING.codeInt();
-		}
-		return s;
-	}
 
 	public String getId() {
 		return id;

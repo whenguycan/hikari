@@ -1,6 +1,5 @@
 package com.lepus.hikari.framework.build;
 
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -19,6 +18,7 @@ public class ParmasInterceptor implements HandlerInterceptor{
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		resolveParams(request);
+		resolveActiveMenu(request);
 		return true;
 	}
 	private void resolveParams(HttpServletRequest request){
@@ -34,6 +34,14 @@ public class ParmasInterceptor implements HandlerInterceptor{
 				}
 			}
 		}
+	}
+	private void resolveActiveMenu(HttpServletRequest request){
+		StringBuffer url = request.getRequestURL();
+		String[] arr = url.toString().split("/");
+		String name = arr[4];
+		if(name.indexOf(".") != -1)
+			name = name.substring(0, name.indexOf("."));
+		request.setAttribute("menuActive", name);
 	}
 
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
