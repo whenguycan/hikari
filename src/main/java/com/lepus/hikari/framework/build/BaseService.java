@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.lepus.hikari.framework.utils.StringUtils;
-
 /**
  * 
  * @author whenguycan
@@ -21,7 +19,7 @@ import com.lepus.hikari.framework.utils.StringUtils;
 public class BaseService<T extends BaseEntity> {
 
 	@Resource
-	BaseDao dao;
+	protected BaseDao dao;
 	
 	private Class<T> clazz;
 	
@@ -39,16 +37,8 @@ public class BaseService<T extends BaseEntity> {
 		return dao.fetch(clazz, id, bornIfNull);
 	}
 	
-	public T saveOrUpdate(T t){
-		return StringUtils.isBlank(t.getId())?save(t):update(t);
-	}
-	
 	public T save(T t){
 		return dao.save(t);
-	}
-	
-	public T update(T t){
-		return dao.update(t);
 	}
 	
 	public void delete(T t){

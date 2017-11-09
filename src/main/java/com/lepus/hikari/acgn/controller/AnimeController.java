@@ -60,16 +60,16 @@ public class AnimeController extends BaseController{
 	}
 	
 	@RequestMapping("/anime/edit.go")
+	@ResponseBody
 	public Object editGo(ModelMap modelMap, String id){
 		Anime anime = animeService.fetch(id, true);
-		modelMap.addAttribute("e", anime);
-		return "anime-list-edit.jsp";
+		return getSuccessResponse("", anime);
 	}
 	
 	@RequestMapping("/anime/edit.do")
 	@ResponseBody
 	public Object editDo(Anime anime){
-//		animeService.saveOrUpdate(anime);
+		animeService.saveOrUpdate(anime);
 		return getSuccessResponse("", null);
 	}
 	

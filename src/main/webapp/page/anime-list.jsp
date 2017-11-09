@@ -58,7 +58,22 @@
 			$("#editModal").modal();
 		});
 		$(".btn-edit").on("click", function(){
-			
+			var data = JSON.parse($(this).val());
+						
+			$("#editModal").find("input").val("");
+			$("#editModal").find("select").val("");
+			<%--
+			$.post("edit.go", {id:id}, function(resp){
+				$.each($("#editForm").find(".form-control"), function(i, e){
+					$.each(resp.data, function(k, v){
+						if($(e).attr("name") == k){
+							$(e).val(v);
+						}
+					});
+				});
+				$("#editModal").modal();
+			});
+			--%>
 		});
 		$(".btn-save").on("click", function(){
 			
@@ -100,13 +115,13 @@
 	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<th>Index</th>
-				<th>Name</th>
-				<th>Ext</th>
-				<th>Year / Month</th>
-				<th>Curr / Total</th>
-				<th>SerialState</th>
-				<th>Operate</th>
+				<th>index</th>
+				<th>name</th>
+				<th>ext</th>
+				<th>year / month</th>
+				<th>curr / total</th>
+				<th>serialState</th>
+				<th>operate</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -119,7 +134,7 @@
 					<td>${e.curr } / ${e.total }</td>
 					<td>${dcwe:convert('SerialState', e.serialState) }</td>
 					<td>
-						<button class="btn-edit" type="button" value="${e.id }">修改</button>
+						<button class="btn-edit" type="button" value='{"id":"${e.id }"}'>修改</button>
 						<button class="btn-delete-0" type="button" value="${e.id }">删除</button></td>
 				</tr>
 			</c:forEach>
@@ -146,12 +161,53 @@
 			</div>
 			<!-- model body -->
 			<div class="modal-body">
-				<form id="editForm" action="edit.do" role="form">
-					<input type="hidden" name="id" value="${e.id }" />
+				<form id="editForm" class="form-horizontal" action="edit.do" role="form">
+					<input type="hidden" name="id" value="${e.name }" />
 					<div class="form-group">
-						<label for="input-id" class="col-sm-2 control-label">Id</label>
+						<label for="input-name" class="col-sm-3 control-label">name</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" id="input-id" placeholder="Id">
+							<input type="text" class="form-control" id="input-name" name="name" placeholder="name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-ext" class="col-sm-3 control-label">ext</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="input-ext" name="ext" placeholder="ext">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-year" class="col-sm-3 control-label">year</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="input-year" name="year" placeholder="year">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-month" class="col-sm-3 control-label">month</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="input-month" name="month" placeholder="month">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-curr" class="col-sm-3 control-label">curr</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="input-curr" name="curr" placeholder="curr">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-total" class="col-sm-3 control-label">total</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="input-total" name="total" placeholder="total">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-total" class="col-sm-3 control-label">serialState</label>
+						<div class="col-sm-6">
+							<select class="form-control" id="input-serialState" name="serialState" >
+								<option value="">全部</option>
+								<c:forEach items="${SerialState }" var="e">
+									<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 				</form>
