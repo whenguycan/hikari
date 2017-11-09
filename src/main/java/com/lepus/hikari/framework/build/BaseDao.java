@@ -2,15 +2,11 @@ package com.lepus.hikari.framework.build;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
-
-import com.lepus.hikari.acgn.bean.Anime;
 
 /**
  * 
@@ -25,6 +21,18 @@ public class BaseDao extends HibernateDaoSupport{
 	@Autowired
 	public void setMySessionFactory(SessionFactory sessionFactory){
 		super.setSessionFactory(sessionFactory);
+	}
+	
+	public <T> T fetch(Class<T> clazz, String id, boolean bornIfNull){
+		try {
+			T t = null;
+			if(id != null && !"".equals(id))
+				t = getHibernateTemplate().get(clazz, id);
+			return bornIfNull?t==null?clazz.newInstance():t:t;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public <T> T save(T t){

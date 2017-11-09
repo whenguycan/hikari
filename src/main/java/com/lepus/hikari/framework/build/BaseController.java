@@ -1,6 +1,5 @@
 package com.lepus.hikari.framework.build;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,20 +34,20 @@ public class BaseController {
 		return paramMap;
 	}
 	
-	protected String getSuccessJson(String msg, Object data){
+	protected Map<String, Object> getSuccessResponse(String msg, Object data){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("success", true);
 		map.put("msg", msg);
 		map.put("data", data);
-		return gson.toJson(map);
+		return map;
 	}
 	
-	protected String getFailedJson(String msg, Exception e){
+	protected Map<String, Object> getFailedResponse(String msg, Exception e){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("success", false);
 		map.put("msg", msg);
 		map.put("e", e!=null?e.getStackTrace():null);
-		return gson.toJson(map);
+		return map;
 	}
 
 }

@@ -1,6 +1,8 @@
 /target/
 /.classpath
 /.project
+/.mymetadata
 /.settings/
+/.externalToolBuilders/
 /src/main/webapp/WEB-INF/classes/
 /src/main/webapp/WEB-INF/desktop.ini

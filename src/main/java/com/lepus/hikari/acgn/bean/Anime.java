@@ -4,11 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import com.lepus.hikari.acgn.enums.SerialState;
 import com.lepus.hikari.framework.build.BaseEntity;
@@ -23,15 +19,15 @@ import com.lepus.hikari.framework.build.BaseEntity;
 @Table(name = "t_e_anime")
 public class Anime extends BaseEntity{
 	private static final long serialVersionUID = 4104312292631474689L;
-
-	@Id
-	@Column(columnDefinition = "varchar(32)")
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(strategy = "uuid", name = "system-uuid")
-	private String id;
 	
 	@Column(columnDefinition = "varchar(64)")
 	private String name;
+	
+	@Column(columnDefinition = "varchar(32)")
+	private String ext;
+	
+	@Column(columnDefinition = "int(11) not null")
+	private int season;
 	
 	@Column(columnDefinition = "int(11) not null")
 	private int serialState = SerialState.ING.codeInt();
@@ -56,14 +52,6 @@ public class Anime extends BaseEntity{
 
 	@Column(columnDefinition = "datetime not null", updatable = true)
 	private Date updateTime = new Date();
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -135,6 +123,22 @@ public class Anime extends BaseEntity{
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getExt() {
+		return ext;
+	}
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
+	public int getSeason() {
+		return season;
+	}
+
+	public void setSeason(int season) {
+		this.season = season;
 	}
 	
 }

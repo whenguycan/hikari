@@ -3,8 +3,6 @@
 <html>
 <script type="text/javascript" src="${root }/plugins/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${root }/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${root }/plugins/kartik-v-bootstrap-fileinput-e21718a/js/fileinput.min.js"></script>
 <script type="text/javascript" src="${root }/plugins/layer-v3.1.0/layer/layer.js"></script>
 <link rel="stylesheet" type="text/css" href="${root }/plugins/bootstrap-3.3.7-dist/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="${root }/plugins/kartik-v-bootstrap-fileinput-e21718a/css/fileinput.min.css" />
 </html>

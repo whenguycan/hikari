@@ -10,6 +10,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.lepus.hikari.framework.utils.StringUtils;
+
 /**
  * 
  * @author whenguycan
@@ -31,6 +33,14 @@ public class BaseService<T extends BaseEntity> {
 		}else{
 			this.clazz = (Class<T>)type;
 		}
+	}
+	
+	public T fetch(String id, boolean bornIfNull){
+		return dao.fetch(clazz, id, bornIfNull);
+	}
+	
+	public T saveOrUpdate(T t){
+		return StringUtils.isBlank(t.getId())?save(t):update(t);
 	}
 	
 	public T save(T t){

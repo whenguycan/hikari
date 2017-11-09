@@ -1,7 +1,6 @@
 package com.lepus.hikari.acgn.controller;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
@@ -60,6 +59,27 @@ public class AnimeController extends BaseController{
 		}
 	}
 	
+	@RequestMapping("/anime/edit.go")
+	public Object editGo(ModelMap modelMap, String id){
+		Anime anime = animeService.fetch(id, true);
+		modelMap.addAttribute("e", anime);
+		return "anime-list-edit.jsp";
+	}
+	
+	@RequestMapping("/anime/edit.do")
+	@ResponseBody
+	public Object editDo(Anime anime){
+//		animeService.saveOrUpdate(anime);
+		return getSuccessResponse("", null);
+	}
+	
+	@RequestMapping("/anime/delete.do")
+	@ResponseBody
+	public Object delete(String id){
+		animeService.delete(id);
+		return getSuccessResponse("", null);
+	}
+	
 	@RequestMapping("/anime/import.go")
 	public Object importGo(){
 		return "anime-list-import.jsp";
@@ -77,7 +97,7 @@ public class AnimeController extends BaseController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return getSuccessJson("0", null);
+		return getSuccessResponse("", null);
 	}
 	
 }

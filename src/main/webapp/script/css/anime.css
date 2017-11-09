@@ -1,0 +1,33 @@
+
+#searchForm .w10 {
+	width: 10%;
+}
+
+#searchForm .w15 {
+	width: 15%;
+}
+
+#searchForm .w20 {
+	width: 20%;
+}
+
+#searchForm .w25 {
+	width: 25%;
+}
+
+#searchForm .f-left {
+	float: left;
+}
+
+#searchForm .f-right {
+	float: right;
+}
+
+.container .table tr td {
+	height: 37px;
+	text-align: center;
+}
+
+.container .table tr th {
+	text-align: center;
+}

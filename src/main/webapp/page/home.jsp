@@ -8,9 +8,9 @@
 <%@ include file="/script/script.jsp"%>
 </head>
 <body>
-	<div class="container">
-		<%@ include file="nav.jsp" %>
-		Home
-	</div>
+<%@ include file="nav.jsp" %>
+<div class="container">
+	Home
+</div>
 </body>
 </html>
