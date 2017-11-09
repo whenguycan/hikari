@@ -9,6 +9,59 @@
 <%@ include file="/script/script.jsp"%>
 <link rel="stylesheet" type="text/css" href="${root }/script/css/anime.css" />
 <script type="text/javascript">
+	var validatorSettings = {
+		message : 'lalala',
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			name : {
+				validators : {
+					notEmpty : true
+				}
+			},
+			year : {
+				validators : {
+					notEmpty : true,
+					between : {
+						min : 1900,
+						max : 2200
+					}
+				}
+			},
+			month : {
+				validators : {
+					notEmpty : true,
+					between : {
+						min : 1,
+						max : 12
+					}
+				}
+			},
+			curr : {
+				validators : {
+					notEmpty : true,
+					digits : true,
+					between : {
+						min : 0,
+						max : 100
+					}
+				}
+			},
+			total : {
+				validators : {
+					notEmpty : true,
+					digits : true,
+					between : {
+						min : 1,
+						max : 100
+					}
+				}
+			}
+		}
+	};
 	$(function() {
 		$(".btn-reset").on("click", function() {
 			$("#searchForm").find(".input-group input").val('');
@@ -53,30 +106,33 @@
 			}
 		});
 		$(".btn-add").on("click", function(){
-			$("#editModal").find("input").val("");
-			$("#editModal").find("select").val("");
+			$("#editModal").find(".form-control").val("");
 			$("#editModal").modal();
 		});
 		$(".btn-edit").on("click", function(){
+			$("#editModal").find(".form-control").val("");
 			var data = JSON.parse($(this).val());
-						
-			$("#editModal").find("input").val("");
-			$("#editModal").find("select").val("");
-			<%--
-			$.post("edit.go", {id:id}, function(resp){
-				$.each($("#editForm").find(".form-control"), function(i, e){
-					$.each(resp.data, function(k, v){
-						if($(e).attr("name") == k){
-							$(e).val(v);
-						}
-					});
+			$.each($("#editForm").find(".form-control"), function(i, e){
+				$.each(data, function(k, v){
+					if($(e).attr("name") == k){
+						$(e).val(v).change();
+					}
 				});
-				$("#editModal").modal();
 			});
-			--%>
+			$("#editModal").modal();
 		});
 		$(".btn-save").on("click", function(){
-			
+			$("#editForm").bootstrapValidator(validatorSettings);
+			$("#editForm").data('bootstrapValidator').validate();
+			if($("#editForm").data('bootstrapValidator').isValid() == true){
+				$.post($("#editForm").attr("action"), $("#editForm").serialize(), function(resp){
+					location.reload();
+				});
+			}
+		});
+		$("#editModal").on("hidden.bs.modal", function(){
+			if($("#editForm").data('bootstrapValidator') != undefined)
+				$("#editForm").data('bootstrapValidator').destroy();
 		});
 	});
 </script>
@@ -134,7 +190,7 @@
 					<td>${e.curr } / ${e.total }</td>
 					<td>${dcwe:convert('SerialState', e.serialState) }</td>
 					<td>
-						<button class="btn-edit" type="button" value='{"id":"${e.id }"}'>修改</button>
+						<button class="btn-edit" type="button" value='{"id":"${e.id }","name":"${e.name }","ext":"${e.ext }","year":"${e.year }","month":"${e.month }","curr":"${e.curr }","total":"${e.total }","serialState":"${e.serialState }"}'>修改</button>
 						<button class="btn-delete-0" type="button" value="${e.id }">删除</button></td>
 				</tr>
 			</c:forEach>
@@ -161,8 +217,8 @@
 			</div>
 			<!-- model body -->
 			<div class="modal-body">
-				<form id="editForm" class="form-horizontal" action="edit.do" role="form">
-					<input type="hidden" name="id" value="${e.name }" />
+				<form id="editForm" class="form-horizontal" action="edit.do" role="form" method="post">
+					<input type="hidden" class="form-control" name="id" value="${e.id }" />
 					<div class="form-group">
 						<label for="input-name" class="col-sm-3 control-label">name</label>
 						<div class="col-sm-6">
@@ -203,7 +259,6 @@
 						<label for="input-total" class="col-sm-3 control-label">serialState</label>
 						<div class="col-sm-6">
 							<select class="form-control" id="input-serialState" name="serialState" >
-								<option value="">全部</option>
 								<c:forEach items="${SerialState }" var="e">
 									<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
 								</c:forEach>
@@ -214,7 +269,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				<button type="button" class="btn btn-primary">保存</button>
+				<button type="button" class="btn btn-primary btn-save">保存</button>
 			</div>
 		</div>
 	</div>

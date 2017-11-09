@@ -219,7 +219,7 @@ public class Encrypt {
 	}
 	
 	private static String generateSalt(){
-		return UUID.randomUUID().toString().replace("-", "").substring(0, 7);
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 	private static String getSaltFromStoredPassword(String passwordStored){
 		String p = passwordStored.substring(0, 2);
@@ -233,6 +233,9 @@ public class Encrypt {
 	}
 	
 	public static void main(String[] args){
-		
+		String password = "jim333";
+		String ep = Encrypt.encodePassword(password);
+		System.out.println(ep);
+		System.out.println(Encrypt.checkPassword(password, ep));
 	}
 }
