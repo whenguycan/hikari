@@ -39,7 +39,7 @@
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://45.32.45.105:3306/hikari" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/hikari" />
 		<property name="user" value="wang" />
 		<property name="password" value="wang@hikari" />
 		<property name="initialPoolSize" value="2" />
