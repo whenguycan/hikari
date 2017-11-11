@@ -41,6 +41,10 @@ public class BaseService<T extends BaseEntity> {
 		return dao.save(t);
 	}
 	
+	public void save(List<T> list){
+		dao.save(list);
+	}
+	
 	public void delete(T t){
 		dao.delete(t);
 	}

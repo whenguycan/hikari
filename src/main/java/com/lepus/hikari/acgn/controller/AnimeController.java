@@ -2,6 +2,8 @@ package com.lepus.hikari.acgn.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,10 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lepus.hikari.acgn.bean.Anime;
+import com.lepus.hikari.acgn.enums.Season;
+import com.lepus.hikari.acgn.enums.SerialState;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Page;
-import com.lepus.hikari.framework.utils.StringUtils;
 
 /**
  * 
@@ -33,30 +36,11 @@ public class AnimeController extends BaseController{
 	
 	@RequestMapping("/anime/list.go")
 	public Object go(ModelMap modelMap, HttpServletRequest req, Page<Anime> page){
-		String size = req.getParameter("size");
-		init(size);
 		Map<String, String> params = getInterceptoredParams(req);
 		params.put("s_order_desc_createTime", "order");
 		page = animeService.findPage(params, page);
 		modelMap.addAttribute("page", page);
 		return "anime-list.jsp";
-	}
-	private void init(String size){
-		if(StringUtils.isNotBlank(size)){
-			try {
-				int x = Integer.parseInt(size);
-				for(int i=0; i<x; i++){
-					Anime anime = new Anime();
-					anime.setName("Anime" + Math.random());
-					anime.setYear(2016);
-					anime.setMonth(i);
-					anime.setSerialState(i%2 + 1);
-					animeService.save(anime);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	@RequestMapping("/anime/edit.go")
@@ -91,13 +75,44 @@ public class AnimeController extends BaseController{
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
 			String line = null;
+			List<Anime> list = new ArrayList<Anime>();
 			while((line = br.readLine()) != null){
-				System.out.println(line);
+				resolve0(line, list);
 			}
+			animeService.save(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return getSuccessResponse("", null);
+	}
+	private void resolve0(String line, List<Anime> list){
+		String[] arr = line.split("-");
+		if(arr != null && arr.length > 1){
+			Anime anime = new Anime();
+			anime.setName(arr[0]);
+			anime.setCurr(Integer.parseInt(arr[1]));
+			anime.setTotal(anime.getCurr());
+			anime.setSeason(Season.S.codeInt());
+			if(arr.length > 2){
+				Season season = Season.parse(arr[2]);
+				anime.setSeason(season.codeInt());
+			}
+			anime.setSerialState(SerialState.END.codeInt());
+			list.add(anime);
+		}else{
+			System.out.println("error data : " + line);
+		}
+	}
+	
+	@RequestMapping("/anime/favo.do")
+	@ResponseBody
+	public Object favo(String id){
+		Anime anime = animeService.fetch(id, false);
+		if(anime != null && anime.getId() != null){
+			anime.setFavo(anime.getFavo() ^ 1);
+			animeService.saveOrUpdate(anime);
+		}
+		return getSuccessResponse("", anime.getFavo());
 	}
 	
 }

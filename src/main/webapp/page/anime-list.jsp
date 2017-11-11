@@ -46,7 +46,7 @@
 					digits : true,
 					between : {
 						min : 0,
-						max : 100
+						max : 1000
 					}
 				}
 			},
@@ -55,8 +55,8 @@
 					notEmpty : true,
 					digits : true,
 					between : {
-						min : 1,
-						max : 100
+						min : 0,
+						max : 1000
 					}
 				}
 			}
@@ -91,6 +91,8 @@
 			else{
 				var $form = $("#importForm");
 				var form = new FormData(document.getElementById('importForm'));
+				$("#importModal").modal("hide");
+				showMsg("文件导入中,请稍候...");
 				$.ajax({
 					url : $form.attr('action'),
 					data : form,
@@ -98,9 +100,7 @@
 					contentType : false,
 					processData : false,
 					success : function(resp){
-						$("#importModal").modal("hide");
-						alert("文件导入成功！");
-						location.href = $("#searchForm").attr("action");
+						showMsg("文件导入成功。");
 					}
 				});
 			}
@@ -134,75 +134,101 @@
 			if($("#editForm").data('bootstrapValidator') != undefined)
 				$("#editForm").data('bootstrapValidator').destroy();
 		});
+		$("#msgModal").on("hidden.bs.modal", function(){
+			location.href = $("#searchForm").attr("action");
+		});
+		$("input[name=sa_eq_i_favo]").on("change", function(){
+			$("#searchForm").submit();
+		});
+		$(".btn-favo").on("click", function(){
+			var $btn = $(this);
+			$.post("favo.do", {id:$btn.val()}, function(resp){
+				$("#searchForm").submit();
+			});
+		});
 	});
+	function showMsg(msg){
+		$("#msgModal").find(".msgModalContent").html(msg);
+		$("#msgModal").modal();
+	};
 </script>
 </head>
 <body>
 <%@ include file="nav.jsp"%>
 <div class="container">
-	<form id="searchForm" action="list.go" method="post">
-		<input type="hidden" name="pageNo" value="1" />
-		<div class="input-group f-right w10">
-			<span class="input-group-btn" id="basic-addon0">
-				<button class="btn btn-default btn-reset" type="button">Reset</button>
-				<button class="btn btn-default" type="submit">Go!</button>
-			</span>
-		</div>
-		<div class="input-group f-right w20">
-			<span class="input-group-addon">SerialState</span>
-			<select class="form-control" name="sa_eq_i_serialState">
-				<option value="">全部</option>
-				<c:forEach items="${SerialState }" var="e">
-					<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="input-group f-right w20">
-			<span class="input-group-addon">Name</span>
-			<input type="text" class="form-control" name="sa_like_s_name" value="${sa_like_s_name }" placeholder="name">
-		</div>
-		<div class="input-group f-left">
-			<span class="input-gropu-btn">
-				<button class="btn btn-default btn-import-0" type="button">导入</button>
-				<button class="btn btn-default btn-add" type="button">添加</button>
-			</span>
-		</div>
-	</form>
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>index</th>
-				<th>name</th>
-				<th>ext</th>
-				<th>year / month</th>
-				<th>curr / total</th>
-				<th>serialState</th>
-				<th>operate</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${page.list }" var="e" varStatus="idx">
+		<form id="searchForm" action="list.go" method="post">
+			<input type="hidden" name="pageNo" value="1" />
+			<div class="input-group f-right w10">
+				<span class="input-group-btn" id="basic-addon0">
+					<button class="btn btn-default btn-reset" type="button">Reset</button>
+					<button class="btn btn-default" type="submit">Go!</button>
+				</span>
+			</div>
+			<div class="input-group f-right w20">
+				<span class="input-group-addon">SerialState</span>
+				<select class="form-control" name="sa_eq_i_serialState">
+					<option value="">全部</option>
+					<c:forEach items="${SerialState }" var="e">
+						<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div class="input-group f-right w20">
+				<span class="input-group-addon">Name</span>
+				<input type="text" class="form-control" name="sa_like_s_name" value="${sa_like_s_name }" placeholder="name">
+			</div>
+			<div class="input-group f-right w10">
+				<span class="input-group-addon">Favorite</span>
+				<div class="form-control"><input type="checkbox" name="sa_eq_i_favo" value="1" <c:if test="${sa_eq_i_favo == '1' }">checked</c:if> /></div>
+			</div>
+			<div class="input-group f-left">
+				<span class="input-gropu-btn">
+					<!-- <button class="btn btn-default btn-import-0" type="button">导入</button> -->
+					<button class="btn btn-default btn-add" type="button">添加</button>
+				</span>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
 				<tr>
-					<td>${idx.count + (page.pageNo - 1) * page.pageSize }</td>
-					<td>${e.name }</td>
-					<td>${e.ext }</td>
-					<td>${e.year } / ${e.month }</td>
-					<td>${e.curr } / ${e.total }</td>
-					<td>${dcwe:convert('SerialState', e.serialState) }</td>
-					<td>
-						<button class="btn-edit" type="button" value='{"id":"${e.id }","name":"${e.name }","ext":"${e.ext }","year":"${e.year }","month":"${e.month }","curr":"${e.curr }","total":"${e.total }","serialState":"${e.serialState }"}'>修改</button>
-						<button class="btn-delete-0" type="button" value="${e.id }">删除</button></td>
+					<th>index</th>
+					<th>name</th>
+					<th>link</th>
+					<th>season</th>
+					<th>curr / total</th>
+					<th>serialState</th>
+					<th>operate</th>
 				</tr>
-			</c:forEach>
-			<c:if test="${page.rowFound != page.pageSize }">
-				<c:forEach begin="1" end="${page.pageSize - page.rowFound }">
+			</thead>
+			<tbody>
+				<c:forEach items="${page.list }" var="e" varStatus="idx">
 					<tr>
-						<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+						<td>${idx.count + (page.pageNo - 1) * page.pageSize }</td>
+						<td>${e.name }</td>
+						<td>
+							<c:if test="${!empty e.link }">
+								<a class="btn" href="${e.link }" target="_blank">LINK</a>
+							</c:if>
+						</td>
+						<td>${dcwe:convert('Season', e.season) }</td>
+						<td>${e.curr } / ${e.total }</td>
+						<td>${dcwe:convert('SerialState', e.serialState) }</td>
+						<td>
+							<button class="btn btn-default btn-edit" type="button" value='{"id":"${e.id }","name":"${e.name }","ext":"${e.ext }","curr":"${e.curr }","total":"${e.total }","serialState":"${e.serialState }","season":"${e.season }","link":"${e.link }"}'>修改</button>
+							<button class="btn btn-default btn-delete-0" type="button" value="${e.id }">删除</button>
+							<button class="btn <c:if test="${e.favo == '1' }">btn-primary</c:if><c:if test="${e.favo != '1' }">btn-default</c:if> btn-favo" type="button" value="${e.id }">Favo</button>
+						</td>
 					</tr>
 				</c:forEach>
-			</c:if>
-		</tbody>
-	</table>
+				<c:if test="${page.rowFound != page.pageSize }">
+					<c:forEach begin="1" end="${page.pageSize - page.rowFound }">
+						<tr>
+							<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+						</tr>
+					</c:forEach>
+				</c:if>
+			</tbody>
+		</table>
 	<%@ include file="pagination.jsp"%>
 </div>
 
@@ -226,21 +252,13 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="input-ext" class="col-sm-3 control-label">ext</label>
+						<label for="input-season" class="col-sm-3 control-label">season</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" id="input-ext" name="ext" placeholder="ext">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="input-year" class="col-sm-3 control-label">year</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" id="input-year" name="year" placeholder="year">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="input-month" class="col-sm-3 control-label">month</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" id="input-month" name="month" placeholder="month">
+							<select class="form-control" id="input-season" name="season" >
+								<c:forEach items="${Season }" var="e">
+									<option value="${e.code }" <c:if test="${e.code == '1' }">selected</c:if>>${e.text }</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -253,6 +271,12 @@
 						<label for="input-total" class="col-sm-3 control-label">total</label>
 						<div class="col-sm-6">
 							<input type="text" class="form-control" id="input-total" name="total" placeholder="total">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-link" class="col-sm-3 control-label">link</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="input-link" name="link" placeholder="link">
 						</div>
 					</div>
 					<div class="form-group">
@@ -314,6 +338,25 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				<button type="button" class="btn btn-primary btn-delete-1">删除</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- msg modal -->
+<div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="msgModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="msgModalLabel">提示信息</h4>
+			</div>
+			<!-- model body -->
+			<div class="modal-body">
+				<div class="msgModalContent"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
 	</div>

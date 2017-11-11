@@ -40,5 +40,14 @@ public enum Season implements MyEnum{
 	public int codeInt() {
 		return Integer.parseInt(this.code);
 	}
+	
+	public static Season parse(String s){
+		Season[] arr = Season.values();
+		for(Season season : arr){
+			if(season.name().equalsIgnoreCase(s))
+				return season;
+		}
+		return Season.S;
+	}
 
 }

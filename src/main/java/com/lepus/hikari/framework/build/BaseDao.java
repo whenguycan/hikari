@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,22 @@ public class BaseDao extends HibernateDaoSupport{
 	public <T> T save(T t){
 		getHibernateTemplate().save(t);
 		return t;
+	}
+	
+	public void save(List<?> t){
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		int idx = 0;
+		for(Object o : t){
+			session.save(o);
+			idx++;
+			if(idx % 50 == 0){
+				session.flush();
+				session.clear();
+			}
+		}
+		tx.commit();
+		session.close();
 	}
 	
 	public <T> T update(T t){

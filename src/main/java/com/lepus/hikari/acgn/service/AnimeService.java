@@ -20,12 +20,11 @@ public class AnimeService extends BaseService<Anime>{
 				return null;
 			}else{
 				origin.setName(anime.getName());
-				origin.setExt(anime.getExt());
-				origin.setYear(anime.getYear());
-				origin.setMonth(anime.getMonth());
 				origin.setCurr(anime.getCurr());
 				origin.setTotal(anime.getTotal());
 				origin.setSerialState(anime.getSerialState());
+				origin.setSeason(anime.getSeason());
+				origin.setLink(anime.getLink());
 				origin.setUpdateTime(new Date());
 				return dao.update(anime);
 			}

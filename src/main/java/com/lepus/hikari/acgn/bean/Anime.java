@@ -38,14 +38,11 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "int(11) not null")
 	private int total;
 	
-	@Column(columnDefinition = "int(8) not null")
-	private int year;
+	@Column(columnDefinition = "int(11) not null")
+	private int favo;
 	
-	@Column(columnDefinition = "int(8) not null")
-	private int month;
-	
-	@Column(columnDefinition = "varchar(255)")
-	private String summary;
+	@Column(columnDefinition = "varchar(64)")
+	private String link;
 	
 	@Column(columnDefinition = "datetime not null", updatable = false)
 	private Date createTime = new Date();
@@ -85,30 +82,6 @@ public class Anime extends BaseEntity{
 		this.total = total;
 	}
 
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public String getSummary() {
-		return summary;
-	}
-
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -139,6 +112,22 @@ public class Anime extends BaseEntity{
 
 	public void setSeason(int season) {
 		this.season = season;
+	}
+
+	public int getFavo() {
+		return favo;
+	}
+
+	public void setFavo(int favo) {
+		this.favo = favo;
+	}
+
+	public String getLink() {
+		return link!=null&&!"".equals(link)?link.indexOf("://")==-1?"http://"+link:link:link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 }
