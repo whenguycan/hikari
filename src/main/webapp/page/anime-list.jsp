@@ -207,7 +207,7 @@
 						<td>${e.name }</td>
 						<td>
 							<c:if test="${!empty e.link }">
-								<a class="btn" href="${e.link }" target="_blank">LINK</a>
+								<a class="btn" href="${e.link2 }" target="_blank">LINK</a>
 							</c:if>
 						</td>
 						<td>${dcwe:convert('Season', e.season) }</td>

@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import com.lepus.hikari.acgn.enums.SerialState;
 import com.lepus.hikari.framework.build.BaseEntity;
+import com.lepus.hikari.framework.utils.PinyinUtils;
 
 /**
  * 
@@ -20,8 +21,11 @@ import com.lepus.hikari.framework.build.BaseEntity;
 public class Anime extends BaseEntity{
 	private static final long serialVersionUID = 4104312292631474689L;
 	
-	@Column(columnDefinition = "varchar(64)")
+	@Column(columnDefinition = "varchar(64) not null")
 	private String name;
+	
+	@Column(columnDefinition = "varchar(32)")
+	private String pre;
 	
 	@Column(columnDefinition = "varchar(32)")
 	private String ext;
@@ -56,6 +60,7 @@ public class Anime extends BaseEntity{
 
 	public void setName(String name) {
 		this.name = name;
+		setPre(PinyinUtils.getPre(name));
 	}
 
 	public int getSerialState() {
@@ -121,13 +126,25 @@ public class Anime extends BaseEntity{
 	public void setFavo(int favo) {
 		this.favo = favo;
 	}
+	
+	public String getLink(){
+		return this.link;
+	}
 
-	public String getLink() {
+	public String getLink2() {
 		return link!=null&&!"".equals(link)?link.indexOf("://")==-1?"http://"+link:link:link;
 	}
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public String getPre() {
+		return pre;
+	}
+
+	public void setPre(String pre) {
+		this.pre = pre;
 	}
 	
 }

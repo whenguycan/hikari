@@ -22,6 +22,7 @@ import com.lepus.hikari.acgn.enums.SerialState;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Page;
+import com.lepus.hikari.framework.utils.PinyinUtils;
 
 /**
  * 
@@ -33,6 +34,17 @@ public class AnimeController extends BaseController{
 	
 	@Resource
 	protected AnimeService animeService;
+	
+	@RequestMapping("/anime/trans.do")
+	@ResponseBody
+	public Object trans(){
+		List<Anime> list = animeService.findList(null);
+		for(Anime a : list){
+			a.setPre(PinyinUtils.getPre(a.getName()));
+			animeService.saveOrUpdate(a);
+		}
+		return getSuccessResponse("", null);
+	}
 	
 	@RequestMapping("/anime/list.go")
 	public Object go(ModelMap modelMap, HttpServletRequest req, Page<Anime> page){

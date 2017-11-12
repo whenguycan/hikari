@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2017-11-8
  */
 @Controller
-public class HomeController {
+public class HomeController{
 	
 	@RequestMapping("/home.go")
 	public Object home(ModelMap modelMap){

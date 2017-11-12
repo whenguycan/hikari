@@ -51,19 +51,21 @@ public class Hql {
 		String rootAlias = entityName.substring(0, 1).toLowerCase();
 		List<String> andList = new ArrayList<String>();
 		List<String> orderList = new ArrayList<String>();
-		for(Entry<String, String> e : params.entrySet()){
-			String cnd = e.getKey();
-			String val = e.getValue();
-			String[] arr = cnd.split("_");
-			if(arr.length > 3){
-				String operator = arr[1];
-				String dataType = arr[2];
-				String fields = arr[3];
-				boolean resolve = resolve(rootAlias, fields, operator, val, dataType, andList, orderList);
-				if(!resolve)
-					System.out.println("resolve failed : " + cnd);
-			}else{
-				System.out.println("error cnd ignored : " + cnd);
+		if(params != null){
+			for(Entry<String, String> e : params.entrySet()){
+				String cnd = e.getKey();
+				String val = e.getValue();
+				String[] arr = cnd.split("_");
+				if(arr.length > 3){
+					String operator = arr[1];
+					String dataType = arr[2];
+					String fields = arr[3];
+					boolean resolve = resolve(rootAlias, fields, operator, val, dataType, andList, orderList);
+					if(!resolve)
+						System.out.println("resolve failed : " + cnd);
+				}else{
+					System.out.println("error cnd ignored : " + cnd);
+				}
 			}
 		}
 		String origin = "from " + entityName + " " + rootAlias;
