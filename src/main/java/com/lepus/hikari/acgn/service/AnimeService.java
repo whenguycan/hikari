@@ -26,9 +26,18 @@ public class AnimeService extends BaseService<Anime>{
 				origin.setSeason(anime.getSeason());
 				origin.setLink(anime.getLink());
 				origin.setUpdateTime(new Date());
-				return dao.update(anime);
+				return dao.update(origin);
 			}
 		}
+	}
+	
+	public Anime changeFavo(String id){
+		Anime origin = fetch(id, false);
+		if(origin != null){
+			origin.setFavo(origin.getFavo() ^ 1);
+			return dao.update(origin);
+		}
+		return null;
 	}
 	
 }

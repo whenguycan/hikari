@@ -49,7 +49,8 @@ public class AnimeController extends BaseController{
 	@RequestMapping("/anime/list.go")
 	public Object go(ModelMap modelMap, HttpServletRequest req, Page<Anime> page){
 		Map<String, String> params = getInterceptoredParams(req);
-		params.put("s_order_desc_createTime", "order");
+		params.put("s_order_desc_updateTime", "order");
+//		params.put("s_order_asc_pre", "order");
 		page = animeService.findPage(params, page);
 		modelMap.addAttribute("page", page);
 		return "anime-list.jsp";
@@ -119,12 +120,8 @@ public class AnimeController extends BaseController{
 	@RequestMapping("/anime/favo.do")
 	@ResponseBody
 	public Object favo(String id){
-		Anime anime = animeService.fetch(id, false);
-		if(anime != null && anime.getId() != null){
-			anime.setFavo(anime.getFavo() ^ 1);
-			animeService.saveOrUpdate(anime);
-		}
-		return getSuccessResponse("", anime.getFavo());
+		Anime anime = animeService.changeFavo(id);
+		return getSuccessResponse(anime!=null?anime.getFavo()+"":"", null);
 	}
 	
 }
