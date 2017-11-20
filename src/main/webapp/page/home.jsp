@@ -10,7 +10,9 @@
 <body>
 <%@ include file="nav.jsp" %>
 <div class="container">
-	Home
+	<div class="col-xs-12">
+		Home
+	</div>
 </div>
 </body>
 </html>

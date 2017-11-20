@@ -19,6 +19,14 @@
 	width: 40%;
 }
 
+#searchForm .w60 {
+	width: 60%;
+}
+
+#searchForm .w75 {
+	width: 75%;
+}
+
 #searchForm .f-left {
 	float: left;
 }

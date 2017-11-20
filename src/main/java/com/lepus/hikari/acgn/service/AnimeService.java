@@ -26,6 +26,7 @@ public class AnimeService extends BaseService<Anime>{
 				origin.setSeason(anime.getSeason());
 				origin.setLink(anime.getLink());
 				origin.setUpdateTime(new Date());
+				origin.calWatchState();
 				return dao.update(origin);
 			}
 		}
