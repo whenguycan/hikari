@@ -68,6 +68,9 @@
 			$("#searchForm").find(".input-group select").val('');
 			$(this).blur();
 		});
+		$(".btn-submit").on("click", function(){
+			$("#searchForm").submit();
+		});
 		$(".btn-delete-0").on("click", function(){
 			$("#deleteForm").find("input").val("");
 			var id = $(this).val();
@@ -156,30 +159,20 @@
 <body>
 <%@ include file="nav.jsp"%>
 <div class="container">
+	<div class="col-xs-12 container-searcher">
 		<form id="searchForm" action="list.go" method="post">
 			<input type="hidden" name="pageNo" value="1" />
-			<div class="input-group f-right w10">
-				<span class="input-group-btn" id="basic-addon0">
-					<button class="btn btn-default btn-reset" type="button">Reset</button>
-					<button class="btn btn-default" type="submit">Go!</button>
-				</span>
-			</div>
-			<div class="input-group f-right w20">
-				<span class="input-group-addon">SerialState</span>
-				<select class="form-control" name="sa_eq_i_serialState">
-					<option value="">全部</option>
-					<c:forEach items="${SerialState }" var="e">
-						<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="input-group f-right w20">
+			<div class="input-group f-right w40">
+				<span class="input-group-addon">Favorite</span>
+				<div class="form-control">
+					<input type="checkbox" name="sa_eq_i_favo" value="1" <c:if test="${sa_eq_i_favo == '1' }">checked</c:if> />
+				</div>
 				<span class="input-group-addon">Name</span>
 				<input type="text" class="form-control" name="sa_like_s_name" value="${sa_like_s_name }" placeholder="name">
-			</div>
-			<div class="input-group f-right w10">
-				<span class="input-group-addon">Favorite</span>
-				<div class="form-control"><input type="checkbox" name="sa_eq_i_favo" value="1" <c:if test="${sa_eq_i_favo == '1' }">checked</c:if> /></div>
+				<span class="input-group-btn" id="basic-addon0">
+					<button class="btn btn-default btn-reset" type="button">Reset</button>
+					<button class="btn btn-default btn-submit" type="button">Go!</button>
+				</span>
 			</div>
 			<div class="input-group f-left">
 				<span class="input-gropu-btn">
@@ -188,6 +181,8 @@
 				</span>
 			</div>
 		</form>
+	</div>
+	<div class="col-xs-12">
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -229,8 +224,9 @@
 				</c:if>
 			</tbody>
 		</table>
-	<%@ include file="pagination.jsp"%>
+	</div>
 </div>
+	<%@ include file="pagination.jsp"%>
 
 <!-- modals -->
 <!-- edit modal -->

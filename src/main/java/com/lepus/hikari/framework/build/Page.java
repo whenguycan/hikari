@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class Page<T> {
 	
-	public static final int DEFAULT_PAGE_SIZE = 10;
+	public static final int DEFAULT_PAGE_SIZE = 8;
 	public static final int DEFAULT_FIRST_PAGE_NO = 1;
-	public static final int DISPLAY_PAGINATION_LEN = 5;
+	public static final int DISPLAY_PAGINATION_LEN = 8;
 
 	private int pageNo = DEFAULT_FIRST_PAGE_NO;
 
@@ -119,11 +119,11 @@ public class Page<T> {
 			int begin = 0;
 			int end = 0;
 			if(len % 2 == 0){
-				begin = curr - 2;
-				end = curr + 3;
+				begin = curr - len / 2;
+				end = curr + len / 2 + 1;
 			}else{
-				begin = curr - 2;
-				end = curr + 2;
+				begin = curr - len / 2;
+				end = curr + len / 2;
 			}
 			if(begin < 1){
 				end += 1 - begin;
