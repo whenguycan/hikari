@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.lepus.hikari.acgn.enums.SerialState;
+import com.lepus.hikari.acgn.enums.WatchState;
 import com.lepus.hikari.framework.build.BaseEntity;
 import com.lepus.hikari.framework.utils.PinyinUtils;
 
@@ -35,6 +36,9 @@ public class Anime extends BaseEntity{
 	
 	@Column(columnDefinition = "int(11) not null")
 	private int serialState = SerialState.ING.codeInt();
+	
+	@Column(columnDefinition = "int(11) not null")
+	private int watchState = WatchState.ING.codeInt();
 	
 	@Column(columnDefinition = "int(11) not null")
 	private int curr;
@@ -145,6 +149,18 @@ public class Anime extends BaseEntity{
 
 	public void setPre(String pre) {
 		this.pre = pre;
+	}
+
+	public int getWatchState() {
+		return watchState;
+	}
+
+	public void setWatchState(int watchState) {
+		this.watchState = watchState;
+	}
+	
+	public void calWatchState(){
+		this.watchState = this.curr==0&&this.total==0?WatchState.INIT.codeInt():this.curr!=this.total?WatchState.ING.codeInt():WatchState.END.codeInt();
 	}
 	
 }
