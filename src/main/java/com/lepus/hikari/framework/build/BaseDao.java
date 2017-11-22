@@ -44,17 +44,23 @@ public class BaseDao extends HibernateDaoSupport{
 	public void save(List<?> t){
 		Session session = getSession();
 		Transaction tx = session.beginTransaction();
-		int idx = 0;
-		for(Object o : t){
-			session.save(o);
-			idx++;
-			if(idx % 50 == 0){
-				session.flush();
-				session.clear();
+		try {
+			int idx = 0;
+			for(Object o : t){
+				session.save(o);
+				idx++;
+				if(idx % 50 == 0){
+					session.flush();
+					session.clear();
+				}
 			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			tx.rollback();
+			session.close();
 		}
-		tx.commit();
-		session.close();
 	}
 	
 	public <T> T update(T t){

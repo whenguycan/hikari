@@ -11,20 +11,20 @@ import com.lepus.hikari.framework.utils.StringUtils;
 @Repository
 public class AnimeService extends BaseService<Anime>{
 	
-	public Anime saveOrUpdate(Anime anime){
-		if(StringUtils.isBlank(anime.getId())){
-			return save(anime);
+	public Anime saveOrUpdate(Anime e){
+		if(StringUtils.isBlank(e.getId())){
+			return save(e);
 		}else{
-			Anime origin = fetch(anime.getId(), false);
+			Anime origin = fetch(e.getId(), false);
 			if(origin == null){
 				return null;
 			}else{
-				origin.setName(anime.getName());
-				origin.setCurr(anime.getCurr());
-				origin.setTotal(anime.getTotal());
-				origin.setSerialState(anime.getSerialState());
-				origin.setSeason(anime.getSeason());
-				origin.setLink(anime.getLink());
+				origin.setName(e.getName());
+				origin.setCurr(e.getCurr());
+				origin.setTotal(e.getTotal());
+				origin.setSerialState(e.getSerialState());
+				origin.setSeason(e.getSeason());
+				origin.setLink(e.getLink());
 				origin.setUpdateTime(new Date());
 				origin.calWatchState();
 				return dao.update(origin);
