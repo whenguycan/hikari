@@ -62,5 +62,13 @@ public class Note extends BaseEntity{
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public double getRan() {
+		return ran;
+	}
+
+	public void setRan(double ran) {
+		this.ran = ran;
+	}
 	
 }
