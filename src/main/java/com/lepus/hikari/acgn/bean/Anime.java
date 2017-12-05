@@ -49,7 +49,7 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "int(11) not null")
 	private int favo;
 	
-	@Column(columnDefinition = "varchar(64)")
+	@Column(columnDefinition = "varchar(255)")
 	private String link;
 	
 	@Column(columnDefinition = "datetime not null", updatable = false)
