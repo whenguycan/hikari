@@ -221,7 +221,7 @@
 							</c:if>
 						</td>
 						<td>${dcwe:convert('Season', e.season) }</td>
-						<td>${e.curr } / ${e.total }</td>
+						<td><span <c:if test="${e.curr == e.total && e.total != 0 }">class='color-blue'</c:if>>${e.curr }</span> / ${e.total }</td>
 						<td>${dcwe:convert('SerialState', e.serialState) }</td>
 						<td>
 							<button class="btn btn-default btn-edit" type="button" value='{"id":"${e.id }","name":"${e.name }","ext":"${e.ext }","curr":"${e.curr }","total":"${e.total }","serialState":"${e.serialState }","season":"${e.season }","link":"${e.link }"}'>修改</button>
