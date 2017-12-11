@@ -7,7 +7,7 @@
 			<ul class="pagination">
 				<li><a href="javascript:go('1');" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 				<c:forEach items="${page.pagination }" var="e">
-					<li><a href="javascript:go('${e }');">${e }</a></li>	
+					<li <c:if test="${page.pageNo == e }">class='active'</c:if>><a href="javascript:go('${e }');">${e }</a></li>	
 				</c:forEach>
 				<li><a href="javascript:go('${page.pageCount }');" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 			</ul>
