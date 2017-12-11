@@ -13,6 +13,7 @@
 						<li <c:if test="${menuActive == 'home' }">class='active'</c:if>><a href="${root }/home.go">Home</a></li>
 						<li <c:if test="${menuActive == 'anime' }">class='active'</c:if>><a href="${root }/anime/list.go">Anime</a></li>
 						<li <c:if test="${menuActive == 'note' }">class='active'</c:if>><a href="${root }/note/random.go">Note</a></li>
+						<li <c:if test="${menuActive == 'video' }">class='active'</c:if>><a href="${root }/video/list.go">Video</a></li>
 					</ul>
 				</div>
 			</div>
