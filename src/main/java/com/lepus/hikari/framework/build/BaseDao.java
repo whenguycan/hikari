@@ -2,6 +2,8 @@ package com.lepus.hikari.framework.build;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -19,7 +21,7 @@ public class BaseDao extends HibernateDaoSupport{
 
 	protected SessionFactory sessionFactory;
 	
-	@Autowired
+	@Resource
 	public void setMySessionFactory(SessionFactory sessionFactory){
 		super.setSessionFactory(sessionFactory);
 	}
