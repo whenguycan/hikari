@@ -17,7 +17,7 @@
 <%@ include file="nav.jsp"%>
 <div class="container">
 	<div class="col-xs-12">
-		ACG HA HA !!
+		<a href="anime/page.ajax" / >xxxx</a>
 	</div>
 </div>
 

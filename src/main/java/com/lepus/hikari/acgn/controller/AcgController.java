@@ -7,11 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lepus.hikari.acgn.bean.Anime;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Page;
+import com.lepus.hikari.framework.build.json.Json;
 
 /**
  * 
@@ -30,8 +30,14 @@ public class AcgController extends BaseController{
 	}
 	
 	@RequestMapping("/acg/anime/page.ajax")
-	@ResponseBody
+	@Json(type = Anime.class, include = "id,name", exclude = "name")
 	public Object page(HttpServletRequest req, Page<Anime> page){
+		return animeService.findPage(getInterceptoredParams(req), page);
+	}
+	
+	@RequestMapping("/acg/anime/page2.ajax")
+	@ResponseBody
+	public Object page2(HttpServletRequest req, Page<Anime> page){
 		return animeService.findPage(getInterceptoredParams(req), page);
 	}
 	
