@@ -9,7 +9,11 @@
 <%@ include file="/script/script.jsp"%>
 <script type="text/javascript">
 	$(function() {
-		
+		$(".click").click(function(){
+			$.post("anime/page.ajax", {}, function(resp){
+				$(".show").html(resp);
+			});
+		});
 	});
 </script>
 </head>
@@ -17,7 +21,8 @@
 <%@ include file="nav.jsp"%>
 <div class="container">
 	<div class="col-xs-12">
-		<a href="anime/page.ajax" / >xxxx</a>
+		<button class="click">按钮</button>
+		<div class="show"></div>
 	</div>
 </div>
 
