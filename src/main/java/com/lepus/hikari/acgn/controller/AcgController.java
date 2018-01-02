@@ -30,7 +30,7 @@ public class AcgController extends BaseController{
 	}
 	
 	@RequestMapping("/acg/anime/page.ajax")
-	@Json(type = Anime.class, include = "id,name", exclude = "name")
+	@Json(type = Anime.class, include = "id,name")
 	public Object page(HttpServletRequest req, Page<Anime> page){
 		return animeService.findPage(getInterceptoredParams(req), page);
 	}

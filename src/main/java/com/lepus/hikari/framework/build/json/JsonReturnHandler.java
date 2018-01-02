@@ -18,12 +18,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class JsonReturnHandler implements HandlerMethodReturnValueHandler{
 
 	public boolean supportsReturnType(MethodParameter methodparameter) {
-		System.out.println(1);
 		return methodparameter.getMethodAnnotation(Json.class) != null;
 	}
 
 	public void handleReturnValue(Object obj, MethodParameter methodparameter, ModelAndViewContainer modelandviewcontainer, NativeWebRequest nativewebrequest) throws Exception {
-		System.out.println(2);
 		modelandviewcontainer.setRequestHandled(true);
 		HttpServletResponse response = nativewebrequest.getNativeResponse(HttpServletResponse.class);
 		Annotation[] annos = methodparameter.getMethodAnnotations();
