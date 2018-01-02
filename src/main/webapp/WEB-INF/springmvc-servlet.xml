@@ -20,12 +20,17 @@
 		<mvc:return-value-handlers>
 			<bean class="com.lepus.hikari.framework.build.json.JsonReturnHandler"></bean>
 		</mvc:return-value-handlers>
+		<mvc:argument-resolvers>
+			<bean class="com.lepus.hikari.framework.build.date.String2DateArgumentResolver"></bean>
+		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
 	<context:component-scan base-package="com.lepus.hikari.*.controller,com.lepus.hikari.framework" />
 
+	<!-- 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	 -->
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/page/"></property>
