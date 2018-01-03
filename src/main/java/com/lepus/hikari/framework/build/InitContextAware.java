@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.ServletContextAware;
 
-import com.dc.w.taglib.EnumsConverter;
+import com.lepus.hikari.framework.utils.EnumsConverter;
 import com.lepus.hikari.framework.utils.EnumsUtils;
 
 /**
