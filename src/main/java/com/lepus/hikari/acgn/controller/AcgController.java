@@ -11,7 +11,6 @@ import com.lepus.hikari.acgn.bean.Anime;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Page;
-import com.lepus.hikari.framework.build.json.Json;
 
 /**
  * 
@@ -30,7 +29,6 @@ public class AcgController extends BaseController{
 	}
 	
 	@RequestMapping("/acg/anime/page.ajax")
-	@Json(type = Anime.class, include = "id,name")
 	public Object page(HttpServletRequest req, Page<Anime> page){
 		return animeService.findPage(getInterceptoredParams(req), page);
 	}
