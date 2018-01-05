@@ -18,7 +18,7 @@
 			</bean>
 		</mvc:message-converters>
 		<mvc:return-value-handlers>
-			<bean class="com.lepus.hikari.framework.build.json.JsonReturnHandler"></bean>
+			<bean class="com.lepus.hikari.framework.build.json.JacksonJsonReturnHandler"></bean>
 		</mvc:return-value-handlers>
 		<mvc:argument-resolvers>
 			<bean class="com.lepus.hikari.framework.build.date.String2DateArgumentResolver"></bean>

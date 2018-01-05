@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lepus.hikari.acgn.bean.Anime;
+import com.lepus.hikari.acgn.bean.Note;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Page;
+import com.lepus.hikari.framework.build.jackson.Json;
+import com.lepus.hikari.framework.build.jackson.Filter ;
 
 /**
  * 
@@ -29,8 +32,15 @@ public class AcgController extends BaseController{
 	}
 	
 	@RequestMapping("/acg/anime/page.ajax")
+	@Json(filters = {
+		@Filter(type = Anime.class, include = "id,name"), 
+		@Filter(type = Note.class, include = "title")
+	})
 	public Object page(HttpServletRequest req, Page<Anime> page){
-		return animeService.findPage(getInterceptoredParams(req), page);
+		Object[] arr = new Object[2];
+		arr[0] = new Anime();
+		arr[1] = new Note();
+		return arr;
 	}
 	
 	@RequestMapping("/acg/anime/page2.ajax")
