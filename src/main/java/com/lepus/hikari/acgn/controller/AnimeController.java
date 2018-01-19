@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.lepus.hikari.acgn.bean.Anime;
 import com.lepus.hikari.acgn.enums.Season;
 import com.lepus.hikari.acgn.enums.SerialState;
@@ -34,6 +36,24 @@ public class AnimeController extends BaseController{
 	
 	@Resource
 	protected AnimeService animeService;
+	
+	@RequestMapping("/anime/cross.ajax")
+	public void corss(HttpServletResponse resp){
+		resp.addHeader("Access-Control-Allow-Origin", "*");
+		try {
+			List<Anime> list = new ArrayList<Anime>();
+			for(int i=0, len=3; i<len; i++){
+				Anime anime = new Anime();
+				anime.setId(String.valueOf(i));
+				anime.setName("name" + i);
+				list.add(anime);
+			}
+			resp.getOutputStream().write(new Gson().toJson(list).getBytes());
+			resp.getOutputStream().flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@RequestMapping("/anime/trans.do")
 	@ResponseBody
