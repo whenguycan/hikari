@@ -177,7 +177,6 @@
 			<form id="searchForm" action="list.go" method="post">
 				<input type="hidden" name="pageNo" value="1" />
 				<div class="input-group f-right w75">
-					<!-- 
 					<span class="input-group-addon">Favo</span>
 					<div class="form-control">
 						<input type="checkbox" name="sa_eq_i_favo" value="1" <c:if test="${sa_eq_i_favo == '1' }">checked</c:if> />
@@ -195,7 +194,6 @@
 							<option value="${e.code }" <c:if test="${e.code == sa_eq_i_serialState }">selected</c:if>>${e.text }</option>
 						</c:forEach>
 					</select>
-					 -->
 					<span class="input-group-addon">Name</span>
 					<input type="text" class="form-control" name="sa_like_s_name" value="${sa_like_s_name }" placeholder="name">
 					<span class="input-group-btn" id="basic-addon0">
@@ -207,37 +205,12 @@
 					<span class="input-gropu-btn">
 						<!-- <button class="btn btn-default btn-import-0" type="button">导入</button> -->
 						<button class="btn btn-default btn-add" type="button">添加</button>
-						<button class="btn btn-default btn-manage" ng-click="toggle()" type="button">管理</button>
 					</span>
 				</div>
 			</form>
 		</div>
-		<div class="col-xs-2" >
-			<ul ng-repeat="year in years">
-				<li>{{year.name}}</li>
-			</ul>
-			<p style="display: inline-block;" >
-				
-			</p>
-		</div>
-		<div class="col-xs-10 displayer" >
-			<div class="row">
-				<div class="col-xs-3" ng-repeat="x in data">
-					<div class="thumbnail thumbnail-stable">
-						<img src="${root}/img/01.jpg" alt="...">
-						<div class="caption">
-							<!-- <h3>Thumbnail label</h3> -->
-							<p>{{x.name}}</p>
-							<p>curr / total</p>
-							<p>
-								<a href="#" class="btn btn-primary" role="button" >Button</a>
-								<a href="#" class="btn btn-default" role="button" ng-show="delShow">Button</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<table class="table table-bordered" ng-show="false">
+		<div class="col-xs-12 displayer" >
+			<table class="table table-bordered" >
 				<thead>
 					<tr>
 						<th>index</th>
@@ -284,7 +257,7 @@
 			</table>
 		</div>
 	</div>
-	<!-- <%@ include file="pagination.jsp"%> -->
+	<%@ include file="pagination.jsp"%>
 
 	<!-- modals -->
 	<!-- edit modal -->
