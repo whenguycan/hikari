@@ -31,6 +31,9 @@ public class Anime extends BaseEntity{
 	@Column(columnDefinition = "varchar(32)")
 	private String ext;
 	
+	@Column(columnDefinition = "varchar(32)")
+	private String serialDate;
+	
 	@Column(columnDefinition = "int(11) not null")
 	private int season;
 	
@@ -161,6 +164,14 @@ public class Anime extends BaseEntity{
 	
 	public void calWatchState(){
 		this.watchState = this.curr==0&&this.total==0?WatchState.INIT.codeInt():this.curr!=this.total?WatchState.ING.codeInt():WatchState.END.codeInt();
+	}
+
+	public String getSerialDate() {
+		return serialDate;
+	}
+
+	public void setSerialDate(String serialDate) {
+		this.serialDate = serialDate;
 	}
 	
 }
