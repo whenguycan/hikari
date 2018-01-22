@@ -5,14 +5,32 @@ app.filter('eqs', function(){
 		return x == y;
 	}
 });
-app.factory('factory', function(){
+app.factory('http', function($http){
 	return {
-		get : function(){
-			console.log(Math.random());
+		post : function(url, data, callback){
+			$http.post(url, data, {
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+				transformRequest : function(data){
+					return $.param(data);
+				}
+			}).then(function(resp){
+				callback(resp);
+			});
 		}
-	};
+	}
 });
-app.controller('acg', function($scope, $http){
+app.service('http2', function($http){
+	this.get = function(url, data, callback){
+		url += url.indexOf('?') != -1 ? "&" : "?";
+		for(var name in data){
+			url += name + "=" + data[name] + "&";
+		}
+		$http.get(url, {}).then(function(resp){
+			callback(resp);
+		});
+	}
+});
+app.controller('acg', function($scope, $http, http, http2){
 	$scope.searchName = '';
 	$scope.pics = [];
 	$scope.searchReset = function(){
@@ -22,10 +40,24 @@ app.controller('acg', function($scope, $http){
 		$scope.reload();
 	}
 	$scope.reload = function(){
-		var url = 'list.ajax?s_eq_s_serialDate=' + $scope.yearSelected + "&sa_like_s_name=" + $scope.searchName + "&s_eq_i_serialState=" + $scope.serialSelected;
-		$http.post(url, {}, {}).then(function(resp){
+		$http.post('list.ajax', {
+			s_eq_s_serialDate : $scope.yearSelected,
+			sa_like_s_name : $scope.searchName,
+			s_eq_i_serialState : $scope.serialSelected
+		}, {
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+			transformRequest : function(data){
+				return $.param(data);
+			}
+		}).then(function(resp){
 			$scope.pics = resp.data.list;
 		});
+//		http.post('list.ajax?id=lepus', {}, function(resp){
+//			$scope.pics = resp.data.list;
+//		});
+//		http2.get('list.ajax', {id:'jim'}, function(resp){
+//			$scope.pics = resp.data.list;
+//		});
 	}
 	$scope.yearSelected = '';
 	$scope.years = [];
@@ -47,7 +79,7 @@ app.controller('acg', function($scope, $http){
 		$scope.serialSelected = serial;
 		$scope.reload();
 	}
-	$scope.btnShow = true ;
+	$scope.btnShow = false;
 	$scope.manage = function(){
 		$scope.btnShow = !$scope.btnShow;
 	}

@@ -30,18 +30,19 @@ import com.lepus.hikari.model.Checker;
 @Controller
 public class AcgController extends BaseController{
 
+	@Resource
+	AnimeService animeService;
+
 	@RequestMapping("/acg/index.go")
 	public Object index(){
 		return "acg.jsp";
 	}
-
-	@Resource
-	AnimeService animeService;
 	
 	@RequestMapping("/acg/list.ajax")
 	@Json(filters = @Filter(type = Anime.class, include = "id,name"))
 	public Object list(HttpServletRequest req, HttpServletResponse resp, Page<Anime> page){
 		Map<String, String> params = getInterceptoredParams(req);
+		System.out.println(req.getParameter("id"));
 		params.put("s_order_desc_updateTime", "order");
 		return animeService.findPage(params, page);
 	}

@@ -165,7 +165,7 @@
 	<%@ include file="nav.jsp"%>
 	<div class="container">
 		<div class="col-xs-12 container-searcher">
-			<form id="searchForm" action="list.go" method="post">
+			<form id="searchForm" action="" method="post">
 				<input type="hidden" name="pageNo" value="1" />
 				<div class="input-group f-right w75">
 					<!-- 
