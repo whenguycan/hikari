@@ -65,18 +65,7 @@
 		}
 	};
 	$(function() {
-		$(".btn-reset").on(
-				"click",
-				function() {
-					$("#searchForm").find(".input-group input").val('');
-					$("#searchForm").find(".input-group select").val('');
-					$("#searchForm").find("input[type=checkbox]").prop(
-							"checked", false);
-					$(this).blur();
-				});
-		$(".btn-submit").on("click", function() {
-			$("#searchForm").submit();
-		});
+		
 		$(".btn-delete-0").on("click", function() {
 			$("#deleteForm").find("input").val("");
 			var id = $(this).val();
@@ -198,30 +187,34 @@
 						</c:forEach>
 					</select>
 					 -->
-					<span class="input-group-addon">Name</span> <input type="text"
-						class="form-control" name="sa_like_s_name"
-						value="${sa_like_s_name }" placeholder="name"> <span
-						class="input-group-btn" id="basic-addon0">
-						<button class="btn btn-default btn-reset" type="button">Reset</button>
-						<button class="btn btn-default btn-submit" type="button">Go!</button>
+					<span class="input-group-addon">Name</span>
+						<input type="text" class="form-control" name="sa_like_s_name" value="${sa_like_s_name }" ng-model="searchName" placeholder="name">
+						<span class="input-group-btn" id="basic-addon0">
+						<button class="btn btn-default btn-reset" ng-click="searchReset()" type="button">Reset</button>
+						<button class="btn btn-default btn-default" ng-click="reload()" type="button">Go!</button>
 					</span>
 				</div>
 				<div class="input-group f-left">
 					<span class="input-gropu-btn"> <!-- <button class="btn btn-default btn-import-0" type="button">导入</button> -->
 						<button class="btn btn-default btn-add" type="button">添加</button>
+						<button class="btn btn-default" ng-click="manage()" type="button">管理</button>
 					</span>
 				</div>
 			</form>
 		</div>
-		<div class="col-xs-10">
-			<div class="row curtain">
-				<div class="col-xs-2" ng-repeat="x in data">
+		<div class="col-xs-10 curtain">
+			<div class="row">
+				<div class="col-xs-2" ng-repeat="x in pics">
 					<div class="thumbnail">
 						<img src="/upload/img/06.jpg" alt="...">
 						<div class="caption">
-							<p>我们仍未知道那天所看见的花的名字我们仍未知道那天所看见的花的名字</p>
+							<!-- <p>拉萨看见对方立刻撒旦解放了空间撒反对徕卡</p> -->
+							<p style="height: 60px;">{{x.name}}</p>
 							<p>curr / total</p>
-							<!-- <p><a href="#" class="btn btn-primary" role="button">Button</a></p> -->
+							<p>
+								<a href="#" style="width: 47px;" class="btn btn-primary btn-xs" role="button" ng-show="btnShow">修改</a>
+								<a href="#" style="width: 47px;" class="btn btn-danger btn-xs" role="button" ng-show="btnShow">删除</a>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -230,12 +223,20 @@
 		<style>
 			.curr:hover { text-decoration: none; cursor: default;}
 		</style>
-		<div class="col-xs-2">
+		<div class="col-xs-2 curtain">
 			<div class="col-xs-12">
 				<ul>
 					<li ng-repeat="year in years" >
-						<a href="" class="curr" ng-if="year | eqs:curr" style="color: black; text-decoration: none;">{{year}}</a>
-						<a href="" ng-click="clk(year)" ng-if="!(year | eqs:curr)">{{year}}</a>
+						<a href="" class="curr" ng-if="year.name | eqs:yearSelected" style="color: black; text-decoration: none;">{{year.text}}</a>
+						<a href="" ng-click="yearChange(year.name)" ng-if="!(year.name | eqs:yearSelected)">{{year.text}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-12">
+				<ul>
+					<li ng-repeat="serial in serials" >
+						<a href="" class="curr" ng-if="serial.name | eqs:serialSelected" style="color: black; text-decoration: none;">{{serial.text}}</a>
+						<a href="" ng-click="serialChange(serial.name)" ng-if="!(serial.name | eqs:serialSelected)">{{serial.text}}</a>
 					</li>
 				</ul>
 			</div>

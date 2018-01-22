@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lepus.hikari.acgn.bean.Anime;
+import com.lepus.hikari.acgn.enums.SerialState;
 import com.lepus.hikari.acgn.service.AnimeService;
 import com.lepus.hikari.framework.build.BaseController;
 import com.lepus.hikari.framework.build.Page;
@@ -53,9 +54,19 @@ public class AcgController extends BaseController{
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		int currYear = calendar.get(Calendar.YEAR);
-		for(int i=0, len=20; i<len; i++){
+		for(int i=0, len=10; i<len; i++){
 			list.add(new Checker("" + (currYear - i), "" + (currYear - i)));
 		}
+		return list;
+	}
+	
+	@RequestMapping("/acg/serials.ajax")
+	@ResponseBody
+	public Object serials(HttpServletRequest req, HttpServletResponse resp){
+		List<Checker> list = new ArrayList<>();
+		list.add(new Checker("", "全部"));
+		list.add(new Checker(SerialState.ING.code(), SerialState.ING.text()));
+		list.add(new Checker(SerialState.END.code(), SerialState.END.text()));
 		return list;
 	}
 	
